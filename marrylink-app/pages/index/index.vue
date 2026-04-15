@@ -73,9 +73,9 @@
             <view class="action-icon green">💎</view>
             <text class="action-text">我的订单</text>
           </view>
-          <view class="action-item" @click="goToMore">
-            <view class="action-icon orange">⚙️</view>
-            <text class="action-text">更多</text>
+          <view class="action-item" @click="goToChatList">
+            <view class="action-icon orange">💬</view>
+            <text class="action-text">实时沟通</text>
           </view>
         </view>
       </view>
@@ -203,9 +203,9 @@
           <view class="entry-icon">📋</view>
           <text class="entry-text">我的预约</text>
         </view>
-        <view class="entry-item" @click="goToService">
+        <view class="entry-item" @click="goToChatList">
           <view class="entry-icon">💬</view>
-          <text class="entry-text">客服咨询</text>
+          <text class="entry-text">实时沟通</text>
         </view>
       </view>
       
@@ -636,6 +636,28 @@ export default {
     goToMore() {
       uni.switchTab({
         url: '/pages/mine/index'
+      })
+    },
+
+    // 跳转到实时沟通列表
+    goToChatList() {
+      const token = uni.getStorageSync('token')
+      if (!token) {
+        uni.showModal({
+          title: '提示',
+          content: '请先登录',
+          success: (res) => {
+            if (res.confirm) {
+              uni.navigateTo({
+                url: '/pages/login/index'
+              })
+            }
+          }
+        })
+        return
+      }
+      uni.navigateTo({
+        url: '/pages/chat/index'
       })
     },
     

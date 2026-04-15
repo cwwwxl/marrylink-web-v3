@@ -89,6 +89,8 @@ public class SecurityConfig {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/public/**").permitAll()
                 .antMatchers("/uploads/**").permitAll()
+                // WebSocket 端点（token 在握手时通过参数验证）
+                .antMatchers("/ws/**").permitAll()
                 // 主持人公开接口（列表和详情，供App端未登录用户访问）
                 .antMatchers(org.springframework.http.HttpMethod.GET, "/host/page").permitAll()
                 .antMatchers(org.springframework.http.HttpMethod.GET, "/tag/list").permitAll()

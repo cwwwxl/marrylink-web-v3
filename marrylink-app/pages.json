@@ -94,6 +94,22 @@
         "navigationBarBackgroundColor": "#1d4ed8",
         "navigationBarTextStyle": "white"
       }
+    },
+    {
+      "path": "pages/chat/index",
+      "style": {
+        "navigationBarTitleText": "实时沟通",
+        "navigationBarBackgroundColor": "#1d4ed8",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/chat/room",
+      "style": {
+        "navigationBarTitleText": "聊天",
+        "navigationBarBackgroundColor": "#1d4ed8",
+        "navigationBarTextStyle": "white"
+      }
     }
   ],
   "globalStyle": {

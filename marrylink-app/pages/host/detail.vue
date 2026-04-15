@@ -233,12 +233,26 @@ export default {
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
     },
     
-    // 咨询
+    // 咨询 - 跳转到实时沟通
     handleContact() {
-      uni.showModal({
-        title: '联系主持人',
-        content: `电话：${this.hostInfo.phone || '138****8888'}\n微信：${this.hostInfo.wechat || 'marrylink'}`,
-        showCancel: false
+      const token = uni.getStorageSync('token')
+      if (!token) {
+        uni.showModal({
+          title: '提示',
+          content: '请先登录',
+          success: (res) => {
+            if (res.confirm) {
+              uni.navigateTo({
+                url: '/pages/login/index'
+              })
+            }
+          }
+        })
+        return
+      }
+
+      uni.navigateTo({
+        url: `/pages/chat/room?targetUserId=${this.hostId}&targetName=${encodeURIComponent(this.hostInfo.name || '主持人')}&targetAvatar=${encodeURIComponent(this.hostInfo.avatar || '')}`
       })
     },
     

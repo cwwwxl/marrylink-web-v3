@@ -95,6 +95,15 @@
             </view>
             <text class="menu-arrow">›</text>
           </view>
+
+          <view class="menu-item" @click="goToChatList">
+            <view class="menu-left">
+              <text class="menu-icon">💬</text>
+              <text class="menu-text">实时沟通</text>
+              <view v-if="chatUnreadCount > 0" class="menu-badge">{{ chatUnreadCount }}</view>
+            </view>
+            <text class="menu-arrow">›</text>
+          </view>
           
           <view class="menu-item" @click="goToSettings">
             <view class="menu-left">
@@ -151,6 +160,7 @@
 import { mapState, mapActions } from 'vuex'
 import { getMonthlyOrders } from '@/api/host'
 import { getUnreadCount } from '@/api/message'
+import { getChatUnreadCount } from '@/api/chat'
 import { BASE_URL } from '@/utils/request'
 
 export default {
@@ -162,7 +172,8 @@ export default {
       },
       monthlyOrders: [],
       selectedMonth: null,
-      unreadCount: 0
+      unreadCount: 0,
+      chatUnreadCount: 0
     }
   },
   
@@ -194,6 +205,7 @@ export default {
     if (this.isLoggedIn) {
       this.loadOrderCount()
       this.loadUnreadCount()
+      this.loadChatUnreadCount()
     }
   },
   
@@ -289,6 +301,27 @@ export default {
       } catch (error) {
         console.error('加载未读消息数量失败:', error)
       }
+    },
+
+    // 加载聊天未读数量
+    async loadChatUnreadCount() {
+      try {
+        const res = await getChatUnreadCount()
+        if (res.code === 200 || res.code === '00000') {
+          this.chatUnreadCount = res.data.count || 0
+        }
+      } catch (error) {
+        console.error('加载聊天未读数量失败:', error)
+      }
+    },
+
+    // 跳转到实时沟通列表
+    goToChatList() {
+      if (!this.isLoggedIn) {
+        uni.navigateTo({ url: '/pages/login/index' })
+        return
+      }
+      uni.navigateTo({ url: '/pages/chat/index' })
     },
     
     // 跳转到设置
