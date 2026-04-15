@@ -22,6 +22,13 @@ export function createOrder(data) {
 }
 
 /**
+ * 创建已支付订单（模拟微信支付后直接创建已支付订单）
+ */
+export function createPaidOrder(data) {
+  return post('/order/createPaid', data)
+}
+
+/**
  * 更新订单状态
  */
 export function updateOrderStatus(id, status) {

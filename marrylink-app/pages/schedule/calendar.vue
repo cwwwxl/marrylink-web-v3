@@ -57,11 +57,11 @@
     <view v-if="showBookModal" class="modal-overlay" @click="closeModal">
       <view class="modal-content" @click.stop>
         <view class="modal-header">
-          <text class="modal-title">确认预约</text>
+          <text class="modal-title">确认订单</text>
           <text class="modal-close" @click="closeModal">✕</text>
         </view>
         <view class="modal-body">
-          <text class="modal-date">预约日期：{{ selectedDate }}</text>
+          <text class="modal-date">婚礼日期：{{ selectedDate }}</text>
           <view class="wedding-type-section">
             <text class="section-label">婚礼类型：</text>
             <radio-group @change="handleWeddingTypeChange">
@@ -71,10 +71,14 @@
               </label>
             </radio-group>
           </view>
+          <view class="amount-section">
+            <text class="amount-label">支付金额：</text>
+            <text class="amount-value">¥{{ hostInfo.price || '3000' }}</text>
+          </view>
         </view>
         <view class="modal-footer">
           <view class="modal-btn cancel" @click="closeModal">取消</view>
-          <view class="modal-btn confirm" @click="confirmBook">确认</view>
+          <view class="modal-btn confirm" @click="goToPay">去支付</view>
         </view>
       </view>
     </view>
@@ -269,6 +273,22 @@ export default {
           icon: 'none'
         })
       }
+    },
+
+    // 跳转到支付页面
+    goToPay() {
+      this.showBookModal = false
+      const params = {
+        hostId: this.hostId,
+        hostName: encodeURIComponent(this.hostInfo.name || '主持人'),
+        weddingDate: this.selectedDate,
+        weddingType: this.selectedWeddingType,
+        amount: this.hostInfo.price || '3000'
+      }
+      const query = Object.keys(params).map(k => `${k}=${params[k]}`).join('&')
+      uni.navigateTo({
+        url: `/pages/payment/index?${query}`
+      })
     }
   }
 }
@@ -530,6 +550,26 @@ export default {
         font-size: 28rpx;
         color: #666666;
       }
+    }
+  }
+
+  .amount-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24rpx;
+    padding-top: 24rpx;
+    border-top: 1rpx solid #f0f0f0;
+
+    .amount-label {
+      font-size: 28rpx;
+      color: #333333;
+    }
+
+    .amount-value {
+      font-size: 40rpx;
+      color: #ef4444;
+      font-weight: bold;
     }
   }
 }

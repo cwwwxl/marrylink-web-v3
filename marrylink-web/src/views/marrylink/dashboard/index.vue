@@ -175,7 +175,7 @@ async function fetchRecentOrders() {
 function getStatusText(status) {
   const statusMap = {
     1: '待确认',
-    3: '定金已付',
+    3: '已支付',
     4: '已完成',
     5: '已取消'
   }

@@ -125,6 +125,44 @@ public class OrderController {
         return Result.ok();
     }
 
+    /**
+     * 创建已支付订单（模拟微信支付成功后调用）
+     * 直接创建状态为3（已支付）的订单，同时触发问卷创建等后续流程
+     */
+    @PostMapping("/createPaid")
+    @Transactional(rollbackFor = Exception.class)
+    public Result<Void> createPaid(@RequestBody Map<String, Object> params) {
+        Long hostId = Long.valueOf(params.get("hostId").toString());
+        Long userId = SecurityUtils.getCurrentRefId();
+
+        Order order = new Order();
+        order.setOrderNo(UUID.fastUUID().toString());
+        Host host = hostService.getById(hostId);
+        order.setAmount(host.getPrice());
+        order.setHostId(hostId);
+        order.setHostName(host.getName());
+        order.setUserId(userId);
+        User user = userService.getById(userId);
+        order.setUserName(user.getBrideName() + "&" + user.getGroomName());
+        // 状态直接设为3（已支付），模拟支付成功
+        order.setStatus(3);
+        order.setWeddingType(params.get("weddingType").toString());
+
+        String dateStr = params.get("weddingDate").toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        LocalDate weddingDate = LocalDate.parse(dateStr, formatter);
+        order.setWeddingDate(weddingDate);
+        orderService.save(order);
+
+        // 发送订单创建消息通知
+        messageService.sendOrderCreatedMessage(userId, hostId, order.getUserName(), weddingDate.toString());
+
+        // 已支付状态触发问卷创建
+        qsService.createQS(order);
+
+        return Result.ok();
+    }
+
     @PutMapping
     @Transactional(rollbackFor = Exception.class)
     public Result<Void> update(@RequestBody Order order, HttpServletRequest request) {

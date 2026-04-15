@@ -154,7 +154,7 @@ export default {
       tabs: [
         { label: '全部', value: null },
         { label: '待确认', value: 1 },
-        { label: '定金已付', value: 3 },
+        { label: '已支付', value: 3 },
         { label: '已完成', value: 4 },
         { label: '已取消', value: 5 }
       ],
@@ -252,7 +252,7 @@ export default {
     getStatusText(status) {
       const statusMap = {
         1: '待确认',
-        3: '定金已付',
+        3: '已支付',
         4: '已完成',
         5: '已取消'
       }
@@ -321,7 +321,7 @@ export default {
     showStatusActionSheet(order) {
       const statusOptions = [
         { status: 1, label: '待确认' },
-        { status: 3, label: '定金已付' },
+        { status: 3, label: '已支付' },
         { status: 4, label: '已完成' },
         { status: 5, label: '已取消' }
       ]

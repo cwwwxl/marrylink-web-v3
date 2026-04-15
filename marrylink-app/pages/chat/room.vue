@@ -45,9 +45,9 @@
               <image
                 v-if="msg.msgType === 'image'"
                 class="msg-image"
-                :src="msg.content"
+                :src="getImageUrl(msg.content)"
                 mode="widthFix"
-                @click="previewImage(msg.content)"
+                @click="previewImage(getImageUrl(msg.content))"
               ></image>
               <text v-else class="msg-text" :class="{ 'self-text': msg.isSelf }">{{ msg.content }}</text>
             </view>
@@ -546,13 +546,22 @@ export default {
       }
     },
 
+    // 获取图片完整URL
+    getImageUrl(url) {
+      if (!url) return ''
+      if (url.startsWith('http')) return url
+      // 本地临时文件路径（上传中的预览）
+      if (url.startsWith('blob:') || url.startsWith('/tmp') || url.startsWith('file:') || url.indexOf('_doc/') > -1) return url
+      return BASE_URL + url
+    },
+
     // 预览图片
     previewImage(url) {
       uni.previewImage({
         current: url,
         urls: this.messages
           .filter(m => m.msgType === 'image')
-          .map(m => m.content)
+          .map(m => this.getImageUrl(m.content))
       })
     },
 

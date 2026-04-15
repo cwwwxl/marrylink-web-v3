@@ -15,7 +15,7 @@
           <el-select v-model="queryParams.status" placeholder="全部" clearable>
             <el-option label="待确认" :value="1" />
             <!-- <el-option label="已确认" :value="2" /> -->
-            <el-option label="定金已付" :value="3" />
+            <el-option label="已支付" :value="3" />
             <el-option label="已完成" :value="4" />
             <el-option label="已取消" :value="5" />
           </el-select>
@@ -129,7 +129,7 @@
           <el-select v-model="formData.status" :disabled="isStatusDisabled">
             <el-option label="待确认" :value="1" />
             <!-- <el-option label="已确认" :value="2" /> -->
-            <el-option label="定金已付" :value="3" />
+            <el-option label="已支付" :value="3" />
             <el-option label="已完成" :value="4" />
             <el-option label="已取消" :value="5" />
           </el-select>
@@ -207,7 +207,7 @@ function getStatusType(status) {
 }
 
 function getStatusText(status) {
-  const texts = { 1: '待确认', 3: '定金已付', 4: '已完成', 5: '已取消' }
+  const texts = { 1: '待确认', 3: '已支付', 4: '已完成', 5: '已取消' }
   return texts[status] || '未知'
 }
 

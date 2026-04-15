@@ -78,7 +78,7 @@
         </div>
         <div class="legend-item">
           <span class="legend-dot occupied"></span>
-          <span>已占用（定金已付）</span>
+          <span>已占用（已支付）</span>
         </div>
         <div class="legend-item">
           <span class="legend-dot completed"></span>
