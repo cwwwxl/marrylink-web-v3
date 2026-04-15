@@ -123,7 +123,7 @@ public class UserController {
             String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             String filename = UUID.randomUUID().toString() + extension;
 
-            String uploadDir = System.getProperty("user.dir") + File.separator + "uploads" + File.separator + "avatars";
+            String uploadDir = System.getProperty("user.dir") + File.separator + "marrylink-admin" + File.separator + "uploads" + File.separator + "avatars";
             Path uploadPath = Paths.get(uploadDir);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);

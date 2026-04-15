@@ -6,11 +6,11 @@
 const getWsBaseUrl = () => {
   const isDev = process.env.NODE_ENV === 'development'
   if (isDev) {
-    return 'ws://localhost:8080/ws/chat'
+    return 'ws://localhost:8080/api/v1/ws/chat'
   } else {
     // 生产环境：由 nginx 代理 WebSocket
     const protocol = 'wss'
-    return `${protocol}://${location.host}/ws/chat`
+    return `${protocol}://${location.host}/app-api/ws/chat`
   }
 }
 
