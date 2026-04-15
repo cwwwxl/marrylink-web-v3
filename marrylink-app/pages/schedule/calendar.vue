@@ -78,7 +78,7 @@
         </view>
         <view class="modal-footer">
           <view class="modal-btn cancel" @click="closeModal">取消</view>
-          <view class="modal-btn confirm" @click="goToPay">去支付</view>
+          <view class="modal-btn confirm" @click="goToPay">立即支付</view>
         </view>
       </view>
     </view>

@@ -69,7 +69,7 @@
           :disabled="paying"
           @click="handlePay"
         >
-          {{ paying ? '支付中...' : '确认支付 ¥' + amount }}
+          {{ paying ? '支付中...' : '去支付 ¥' + amount }}
         </button>
         <text class="pay-tip">点击确认支付即表示同意服务协议</text>
       </view>

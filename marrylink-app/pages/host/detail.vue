@@ -103,7 +103,7 @@
         <text class="btn-icon">💬</text>
         <text class="btn-text">咨询</text>
       </view>
-      <button class="book-btn" @click="handleBook">立即支付</button>
+      <button class="book-btn" @click="handleBook">选择档期</button>
     </view>
   </view>
 </template>
